@@ -12,7 +12,6 @@ class DictLineParams(BaseModel):
 
 class DictParams(BaseModel):
     name: str
-    lines: List[DictLineParams] = []
 
 class UpdateDictParams(BaseModel):
     name: str

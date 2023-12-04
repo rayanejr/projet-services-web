@@ -1,12 +1,6 @@
 from pydantic import BaseModel
 from typing import List
 
-class IndexResponse(BaseModel):
-    msg: str
-
-class getTradResponse(BaseModel):
-    word: str
-
 class postTradResponse(BaseModel):
     word: str
     dict_id: int
@@ -18,3 +12,6 @@ class DictResponse(BaseModel):
 
 class AllDictsResponse(BaseModel):
     dicts: List[DictResponse]
+
+class IndexResponse(BaseModel):
+    msg: str
