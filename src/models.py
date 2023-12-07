@@ -22,5 +22,5 @@ class Trad(Base):
     id = Column(Integer, primary_key=True, index=True)
     word = Column(String(40))
     trad = Column(String(40))
-    dict_id = Column(Integer, ForeignKey('dicts.id'))  # Cette ligne doit correspondre à la structure de la base de données
+    dict_id = Column(Integer, ForeignKey('dicts.id'))
 
