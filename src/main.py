@@ -36,6 +36,7 @@ def create_dict(params: DictParams, db: Session = Depends(get_db)):
     db.commit()
     return new_dict
 
+
 @app.get('/dicts/all', response_model=List[DictWithLinesResponse])
 def get_all_dicts_with_lines(db: Session = Depends(get_db)):
     dicts = db.query(Dicts).all()
@@ -58,18 +59,6 @@ def get_dict(dict_id: int, db: Session = Depends(get_db)):
     lines = db.query(DictLine).filter(DictLine.dict_id == dict_id).all()
     return {'id': dict_data.id, 'name': dict_data.name, 'lines': lines}
 
-@app.delete('/dict/{dict_id}', response_model=DictResponse)
-def delete_dict(dict_id: int, db: Session = Depends(get_db)):
-    dict_to_delete = db.query(Dicts).filter(Dicts.id == dict_id).first()
-    if dict_to_delete is None:
-        raise HTTPException(status_code=404, detail="Le dictionnaire n'existe pas")
-
-    db.query(DictLine).filter(DictLine.dict_id == dict_id).delete()
-    db.query(Trad).filter(Trad.dict_id == dict_id).delete()
-    db.delete(dict_to_delete)
-    db.commit()
-
-    return dict_to_delete
 
 @app.put('/dict/{dict_id}/update', response_model=DictWithLinesResponse)
 def update_dict_and_lines(dict_id: int, params: UpdateDictAndLinesParams, db: Session = Depends(get_db)):
@@ -96,36 +85,36 @@ def update_dict_and_lines(dict_id: int, params: UpdateDictAndLinesParams, db: Se
 
 @app.post('/translate', response_model=postTradResponse)
 def translate_word(params: TradParams, db: Session = Depends(get_db)):
-    try:
-        dict = db.query(Dicts).filter(Dicts.id == params.dict_id).first()
-        if dict is None:
-            raise HTTPException(status_code=404, detail="Le dictionnaire n'existe pas")
+    dict = db.query(Dicts).filter(Dicts.id == params.dict_id).first()
+    if dict is None:
+        raise HTTPException(status_code=404, detail="Le dictionnaire n'existe pas")
 
-        translated_word = ""
-        for letter in params.word:
-            if letter.isspace():
-                translated_word += " "
-                continue
-
+    translated_word = ""
+    for letter in params.word:
+        if letter.isspace():
+            translated_word += " "
+        else:
             translation_entry = db.query(DictLine).filter(
                 func.lower(DictLine.key) == func.lower(letter), 
                 DictLine.dict_id == dict.id
             ).first()
+            translated_word += translation_entry.value if translation_entry else "?"
 
-            if translation_entry:
-                translated_word += translation_entry.value
-            else:
-                translated_word += "?"
+    new_trad = Trad(word=params.word, trad=translated_word.strip(), dict_id=dict.id)
+    db.add(new_trad)
+    db.commit()
 
-        new_trad = Trad(word=params.word, trad=translated_word.strip(), dict_id=dict.id)
-        db.add(new_trad)
-        db.commit()
+    return {'word': params.word, 'dict_id': dict.id, 'trad': translated_word.strip()}
 
-        return {'word': params.word, 'dict_id': dict.id, 'trad': translated_word.strip()}
-    except Exception as e:
-        print(f"Erreur lors de la traduction : {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+@app.delete('/dict/{dict_id}', response_model=DictResponse)
+def delete_dict(dict_id: int, db: Session = Depends(get_db)):
+    dict_to_delete = db.query(Dicts).filter(Dicts.id == dict_id).first()
+    if dict_to_delete is None:
+        raise HTTPException(status_code=404, detail="Le dictionnaire n'existe pas")
 
+    db.query(DictLine).filter(DictLine.dict_id == dict_id).delete()
+    db.query(Trad).filter(Trad.dict_id == dict_id).delete()
+    db.delete(dict_to_delete)
+    db.commit()
 
-
-
+    return dict_to_delete
