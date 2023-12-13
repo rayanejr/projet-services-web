@@ -23,4 +23,3 @@ class Trad(Base):
     word = Column(String(40))
     trad = Column(String(40))
     dict_id = Column(Integer, ForeignKey('dicts.id'))
-

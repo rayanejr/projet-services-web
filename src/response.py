@@ -1,6 +1,9 @@
 from pydantic import BaseModel
 from typing import List
 
+class IndexResponse(BaseModel):
+    msg: str
+
 class postTradResponse(BaseModel):
     word: str
     dict_id: int
@@ -19,9 +22,3 @@ class DictWithLinesResponse(BaseModel):
     id: int
     name: str
     lines: List[DictLineResponse]
-
-class AllDictsResponse(BaseModel):
-    dicts: List[DictResponse]
-
-class IndexResponse(BaseModel):
-    msg: str

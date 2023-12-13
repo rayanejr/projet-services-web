@@ -15,7 +15,6 @@ class DictParams(BaseModel):
     name: str
     lines: List[DictLineParams] = []
 
-
-class UpdateDictAndLinesParams(BaseModel):
+class UpdateDict(BaseModel):
     name: str
     lines: List[DictLineParams] = []

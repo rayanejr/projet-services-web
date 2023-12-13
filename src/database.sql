@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : lun. 04 déc. 2023 à 13:45
+-- Généré le : mer. 13 déc. 2023 à 10:01
 -- Version du serveur : 8.1.0
 -- Version de PHP : 8.2.11
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `service-web`
 --
-CREATE DATABASE IF NOT EXISTS `service-web` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `service-web`;
 
 -- --------------------------------------------------------
 
@@ -115,8 +113,21 @@ CREATE TABLE `trads` (
 
 INSERT INTO `trads` (`id`, `word`, `trad`, `dict_id`) VALUES
 (2, 'Rayane', '.-..--.--.--..', 1),
-(3, 'Rayane JERBI', '.-..--.--.--.. .---..-.-.....', 1);
-
+(3, 'Rayane JERBI', '.-..--.--.--.. .---..-.-.....', 1),
+(6, 'Rayane', '.-..--.--.--..', 1),
+(10, 'Rayane', '.-..--.--.--..', 1),
+(14, 'Rayane', '.-..--.--.--..', 1),
+(20, 'Rayane', '.-..--.--.--..', 1),
+(21, 'JERBI', '.---..-.-.....', 1),
+(24, 'bonjour', '-...----..------..-.-.', 1),
+(25, 'bonjour', '-...----..------..-.-.', 1),
+(26, 'cv', '-.-....-', 1),
+(31, 'fire', '..-....-..', 1),
+(32, 'Basma', '-....-...--.-', 1),
+(33, 'Amel', '.---..-..', 1),
+(34, 'Rayane', '.-..--.--.--..', 1),
+(35, '012', '-----.----..---', 1),
+(36, '216', '..---.-----....', 1);
 
 --
 -- Index pour les tables déchargées
@@ -153,19 +164,19 @@ ALTER TABLE `trads`
 -- AUTO_INCREMENT pour la table `dictline`
 --
 ALTER TABLE `dictline`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT pour la table `dicts`
 --
 ALTER TABLE `dicts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `trads`
 --
 ALTER TABLE `trads`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Contraintes pour les tables déchargées
